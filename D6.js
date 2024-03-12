@@ -237,20 +237,20 @@ const addRow = function (imageSrc, productName, quantity, price) {
   table.appendChild(newRow);
 };
 
-addRow("https://placedog.net/50", "Cagnolino", "45", "250")
+addRow("https://placedog.net/50", "Cagnolino", "45", "250");
 
 /* ESERCIZIO 14
        Crea una funzione che nasconda le immagini della tabella quando eseguita
      */
 
 const hideAllImages = function () {
-    const hiddenImage = document.querySelectorAll("#tableArea img")
-    for (let i = 0; i < hiddenImage.length; i++) {
-        hiddenImage[i].style.visibility = "hidden"
-    }
+  const hiddenImage = document.querySelectorAll("#tableArea img");
+  for (let i = 0; i < hiddenImage.length; i++) {
+    hiddenImage[i].style.visibility = "hidden";
+  }
 };
 
-hideAllImages()
+hideAllImages();
 
 /* EXTRA ESERCIZIO 15
        Crea una funzione che cambi il colore del h2 con id "changeMyColor" con un colore random ad ogni click ricevuto
