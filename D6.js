@@ -210,13 +210,47 @@ generateTable();
         Crea una funzione che aggiunga una riga alla tabella precedentemente creata e fornisca i dati necessari come parametri
      */
 
-const addRow = function () {};
+const addRow = function (imageSrc, productName, quantity, price) {
+  let tableArea = document.getElementById("tableArea");
+  let table = tableArea.querySelector("table");
+
+  let newRow = document.createElement("tr");
+
+  let cell1 = document.createElement("td");
+  let image = document.createElement("img");
+  image.src = imageSrc;
+  cell1.appendChild(image);
+  newRow.appendChild(cell1);
+
+  let cell2 = document.createElement("td");
+  cell2.textContent = productName;
+  newRow.appendChild(cell2);
+
+  let cell3 = document.createElement("td");
+  cell3.textContent = quantity;
+  newRow.appendChild(cell3);
+
+  let cell4 = document.createElement("td");
+  cell4.textContent = price;
+  newRow.appendChild(cell4);
+
+  table.appendChild(newRow);
+};
+
+addRow("https://placedog.net/50", "Cagnolino", "45", "250")
 
 /* ESERCIZIO 14
        Crea una funzione che nasconda le immagini della tabella quando eseguita
      */
 
-const hideAllImages = function () {};
+const hideAllImages = function () {
+    const hiddenImage = document.querySelectorAll("#tableArea img")
+    for (let i = 0; i < hiddenImage.length; i++) {
+        hiddenImage[i].style.visibility = "hidden"
+    }
+};
+
+hideAllImages()
 
 /* EXTRA ESERCIZIO 15
        Crea una funzione che cambi il colore del h2 con id "changeMyColor" con un colore random ad ogni click ricevuto
