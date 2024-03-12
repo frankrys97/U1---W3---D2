@@ -138,106 +138,144 @@ revealFooterLink();
         La tabella avrà 5 elementi e questa struttura: immagine, nome prodotto, quantità, prezzo
      */
 
-const generateTable = function () {
-  let tableData = [
-    {
-      image: "https://placedog.net/50",
-      name: "Prodotto 1",
-      quantity: 3,
-      price: 10,
-    },
-    {
-      image: "https://placedog.net/50",
-      name: "Prodotto 2",
-      quantity: 2,
-      price: 15,
-    },
-    {
-      image: "https://placedog.net/50",
-      name: "Prodotto 3",
-      quantity: 5,
-      price: 20,
-    },
-    {
-      image: "https://placedog.net/50",
-      name: "Prodotto 4",
-      quantity: 1,
-      price: 25,
-    },
-    {
-      image: "https://placedog.net/50",
-      name: "Prodotto 5",
-      quantity: 4,
-      price: 30,
-    },
-  ];
+const generateTable = function (data, headText) {
+  // data corrisponde ad un array di oggetti
+  // headText è un array di stringhe con le intestazioni della tabella
 
   let tableArea = document.getElementById("tableArea");
   let table = document.createElement("table");
 
-  for (let i = 0; i < tableData.length; i++) {
-    let rowData = tableData[i];
-    let row = document.createElement("tr");
+  // THEAD
+  let thead = document.createElement("thead");
+  let headerRow = document.createElement("tr");
 
-    let cell1 = document.createElement("td");
-    let image = document.createElement("img");
+  headText.forEach((headerText) => {
+    let header = document.createElement("th");
+    header.textContent = headerText;
+    headerRow.appendChild(header);
+  });
 
-    image.src = rowData.image;
-    cell1.appendChild(image);
-    row.appendChild(cell1);
+  thead.appendChild(headerRow);
+  table.appendChild(thead);
 
-    let cell2 = document.createElement("td");
-    cell2.textContent = rowData.name;
-    row.appendChild(cell2);
+  // Tbody
 
-    let cell3 = document.createElement("td");
-    cell3.textContent = rowData.quantity;
-    row.appendChild(cell3);
+  const tbody = document.createElement("tbody");
 
-    let cell4 = document.createElement("td");
-    cell4.textContent = rowData.price;
-    row.appendChild(cell4);
+  // Itera su ogni oggetto nell'array
+  data.forEach((item) => {
+    const row = document.createElement("tr");
 
-    table.appendChild(row);
-  }
+    // Per ogni chiave nell'oggetto, creiamo una cella nella riga
+    Object.keys(item).forEach((key, index) => {
+      // Object.keys(item) restituisce un array con i valori dell'oggetto item
+      const cell = document.createElement("td");
+      if (key === "imageSrc" && index === 0) {
+        // Se è la prima cella e la chiave è 'imageSrc'
+        const img = document.createElement("img");
+        img.src = item[key];
+        // impostiamo il valore dell'attributo src dell'img uguale alla chiave key dell'oggetto item
+        cell.appendChild(img);
+        // inseriamo l'immagine nella cella
+      } else {
+        // altrimenti
+        cell.textContent = item[key]; // il contenuto del testo è uguale alla chiave key dell'oggetto item
+      }
+      row.appendChild(cell);
+      // inseriamo le celle nelle righe
+    });
+
+    tbody.appendChild(row);
+    // inseriamo le righe nel tbody
+  });
+  table.appendChild(tbody);
 
   tableArea.appendChild(table);
+  table.setAttribute("border", "2");
 };
 
-generateTable();
+let arrayProp = ["Immagine", "Nome Prodotto", "Quantità", "Prezzo"];
+let obj = [
+  {
+    imageSrc: `https://placedog.net/100/100?id=${Math.floor(
+      Math.random() * 200
+    )}`,
+    productName: "Prodotto 1",
+    quantity: 2,
+    price: "€10",
+  },
+  {
+    imageSrc: `https://placedog.net/100/100?id=${Math.floor(
+      Math.random() * 200
+    )}`,
+    productName: "Prodotto 2",
+    quantity: 1,
+    price: "€15",
+  },
+  {
+    imageSrc: `https://placedog.net/100/100?id=${Math.floor(
+      Math.random() * 200
+    )}`,
+    productName: "Prodotto 3",
+    quantity: 3,
+    price: "€20",
+  },
+  {
+    imageSrc: `https://placedog.net/100/100?id=${Math.floor(
+      Math.random() * 200
+    )}`,
+    productName: "Prodotto 4",
+    quantity: 5,
+    price: "€25",
+  },
+  {
+    imageSrc: `https://placedog.net/100/100?id=${Math.floor(
+      Math.random() * 200
+    )}`,
+    productName: "Prodotto 5",
+    quantity: 4,
+    price: "€30",
+  },
+];
+
+generateTable(obj, arrayProp);
 
 /* ESERCIZIO 12
         Crea una funzione che aggiunga una riga alla tabella precedentemente creata e fornisca i dati necessari come parametri
      */
 
-const addRow = function (imageSrc, productName, quantity, price) {
-  let tableArea = document.getElementById("tableArea");
-  let table = tableArea.querySelector("table");
+const newRowData = [
+  `https://placedog.net/100/100?id=${Math.floor(Math.random() * 200)}`,
+  "Nuovo Prodotto",
+  10,
+  "€50",
+];
 
-  let newRow = document.createElement("tr");
+const addRow = function (rowData) {
+  const tableBody = document.querySelector("#tableArea tbody");
 
-  let cell1 = document.createElement("td");
-  let image = document.createElement("img");
-  image.src = imageSrc;
-  cell1.appendChild(image);
-  newRow.appendChild(cell1);
+  // Creiamo una nuova riga
+  const newRow = document.createElement("tr");
 
-  let cell2 = document.createElement("td");
-  cell2.textContent = productName;
-  newRow.appendChild(cell2);
+  // Manipoliamo il primo elemento separatamente per aggiungere l'immagine
+  const firstCell = document.createElement("td");
+  const img = document.createElement("img");
+  img.src = rowData[0]; // Assumendo che il primo elemento sia l'URL dell'immagine
+  firstCell.appendChild(img);
+  newRow.appendChild(firstCell);
 
-  let cell3 = document.createElement("td");
-  cell3.textContent = quantity;
-  newRow.appendChild(cell3);
+  // Itera attraverso gli altri dati nella riga e crea le celle corrispondenti
+  for (let i = 1; i < rowData.length; i++) {
+    const cell = document.createElement("td");
+    cell.textContent = rowData[i];
+    newRow.appendChild(cell);
+  }
 
-  let cell4 = document.createElement("td");
-  cell4.textContent = price;
-  newRow.appendChild(cell4);
-
-  table.appendChild(newRow);
+  // Aggiunge la nuova riga al corpo della tabella
+  tableBody.appendChild(newRow);
 };
 
-addRow("https://placedog.net/50", "Cagnolino", "45", "250");
+addRow(newRowData);
 
 /* ESERCIZIO 14
        Crea una funzione che nasconda le immagini della tabella quando eseguita
@@ -250,7 +288,7 @@ const hideAllImages = function () {
   }
 };
 
-hideAllImages();
+// hideAllImages();
 
 /* EXTRA ESERCIZIO 15
        Crea una funzione che cambi il colore del h2 con id "changeMyColor" con un colore random ad ogni click ricevuto
